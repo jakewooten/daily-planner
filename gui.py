@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from tkcalendar import *
 from datetime import *
 
@@ -31,6 +32,13 @@ def add_list():
       lb.insert(END, e.get())
       e.delete(0, END)
    add_button.config(bg="pink")
+def submit_list():
+   d = date.today().strftime("%m/%d/%y")
+   if d == cal.get_date():
+      todo_list = lb.get(0,END)
+      print(todo_list)
+   elif d != cal.get_date():
+      messagebox.showinfo("Error", "Cannot submit list from a non-current date.")
 
 e = Entry(m2)
 m2.add(e)
@@ -41,10 +49,15 @@ m2.add(add_button)
 remove_button = Button(m2, text="Delete From List", command=remove_list)
 m2.add(remove_button)
 
-cal = Calendar(m2,selectmode="day")
+submit_button = Button(m2, text="Submit List", command=submit_list)
+m2.add(submit_button)
+
+cal = Calendar(m2,selectmode="day", foreground="black", selectforeground="red")
 bottom = Label(m2, text="bottom pane")
 m2.add(bottom)
 m2.add(cal)
+
+
 
 
 mainloop()
